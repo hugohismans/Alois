@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salut Aloïs, moi c'est Claude</title>
+<meta name="description" content="Un petit site pour Aloïs : découvrir Claude et créer son premier site internet ce soir.">
+<style>
+:root{
+  --bg:#0f0d0a; --panel:#1a1612; --panel2:#221c16; --line:#3a2f24;
+  --text:#f3ece2; --muted:#b5a894; --accent:#e9855a; --accent2:#7fe0c2; --warn:#ffd36b;
+  --r:16px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:17px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background-image:radial-gradient(900px 500px at 85% -10%,#e9855a22,transparent),radial-gradient(700px 500px at -10% 30%,#7fe0c218,transparent);}
+a{color:var(--accent2)}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+code{background:#ffffff12;padding:.1em .4em;border-radius:6px;font-size:.92em}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+header.hero{padding:72px 0 40px}
+.tag{display:inline-block;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);padding:4px 12px;border-radius:99px}
+h1{font-size:clamp(2.2rem,7vw,3.7rem);line-height:1.08;margin:18px 0 14px;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--accent)}
+.lead{font-size:1.2rem;color:var(--muted);max-width:60ch}
+h2{font-size:clamp(1.6rem,4.5vw,2.2rem);margin:0 0 10px;letter-spacing:-.01em}
+section{padding:46px 0;border-top:1px solid var(--line)}
+.btn{display:inline-block;background:var(--accent);color:#1a0e07;font-weight:700;text-decoration:none;padding:12px 20px;border-radius:12px;margin:6px 8px 6px 0}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;margin:16px 0}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.grid .card{margin:0}
+.grid h3{margin:0 0 6px;font-size:1.05rem}
+.grid p{margin:0;color:var(--muted);font-size:.97rem}
+/* steps */
+.step{display:flex;gap:16px;margin:0 0 6px;padding:26px 0;border-bottom:1px dashed var(--line)}
+.step:last-child{border:0}
+.num{flex:none;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#1a0e07;font-weight:800;display:grid;place-items:center;font-size:1.2rem}
+.step h3{margin:2px 0 6px;font-size:1.3rem}
+.step ol,.step ul{padding-left:1.2em;margin:.6em 0}
+.step li{margin:.35em 0}
+.note{border-left:3px solid var(--warn);background:#ffd36b12;padding:10px 14px;border-radius:0 10px 10px 0;margin:12px 0;font-size:.95rem}
+.ok{border-left-color:var(--accent2);background:#7fe0c212}
+.time{color:var(--muted);font-size:.85rem}
+/* prompt box */
+.prompt{position:relative;background:#000;border:1px solid var(--line);border-radius:12px;padding:16px 16px 16px;margin:12px 0;font-size:.95rem;white-space:pre-wrap}
+.copy{position:absolute;top:8px;right:8px;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:5px 10px;cursor:pointer;font:inherit;font-size:.8rem}
+.prompt{padding-top:42px}
+/* lab */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.tabs button{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:99px;padding:8px 16px;cursor:pointer;font:inherit;font-size:.95rem}
+.tabs button[aria-selected=true]{background:var(--accent);color:#1a0e07;border-color:var(--accent);font-weight:700}
+.lab{background:#000;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+canvas{display:block;width:100%;height:340px;touch-action:none}
+.ctrl{display:flex;flex-wrap:wrap;gap:14px;align-items:center;padding:12px 16px;border-top:1px solid var(--line);background:var(--panel);font-size:.9rem;color:var(--muted)}
+.ctrl label{display:flex;align-items:center;gap:8px}
+.ctrl input{accent-color:var(--accent)}
+.caption{padding:12px 16px;background:var(--panel);color:var(--muted);font-size:.95rem;border-top:1px solid var(--line)}
+.caption b{color:var(--text)}
+/* hugo */
+.proj a{display:block;text-decoration:none;color:inherit}
+.proj .card:hover{border-color:var(--accent)}
+.proj .card{height:100%}
+footer{padding:40px 0 70px;color:var(--muted);text-align:center;font-size:.9rem;border-top:1px solid var(--line)}
+@media(max-width:520px){.step{gap:12px}.num{width:38px;height:38px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="tag">Un cadeau de Hugo</span>
+    <h1>Salut Aloïs, moi c'est <em>Claude</em>.</h1>
+    <p class="lead">Hugo m'a demandé de te faire ce petit site. Il m'a dit que tu ne t'y connaissais pas trop en informatique : tant mieux, tout est expliqué simplement. À la fin, <strong>tu auras ton propre site internet en ligne, ce soir</strong>, et c'est moi qui l'aurai écrit à ta place.</p>
+    <a class="btn" href="#etapes">Les étapes</a>
+    <a class="btn ghost" href="#lab">Ce que je sais faire</a>
+  </div>
+</header>
+
+<main>
+<section id="qui">
+  <div class="wrap">
+    <h2>Je suis quoi, exactement ?</h2>
+    <p>Je suis une intelligence artificielle, créée par la société Anthropic. Concrètement : tu m'écris comme à un ami qui sait beaucoup de choses, et je te réponds. Je peux t'expliquer, résumer, traduire, corriger, chercher des idées… et surtout <strong>écrire du code</strong>, c'est-à-dire le « texte secret » qui fait fonctionner un site, un jeu ou une application.</p>
+    <p>C'est ça le truc magique : <strong>tu n'as pas besoin de savoir coder</strong>. Tu me dis en français ce que tu veux (« un site avec une photo, ma présentation et un bouton pour me contacter »), et je te le fabrique.</p>
+    <div class="grid" style="margin-top:20px">
+      <div class="card"><h3>💬 Tu parles, je construis</h3><p>Pas de jargon. Décris ton idée comme tu la raconterais à un pote.</p></div>
+      <div class="card"><h3>🔁 On ajuste ensemble</h3><p>« Plus sombre », « plus gros », « ajoute une galerie » : je corrige en quelques secondes.</p></div>
+      <div class="card"><h3>📚 J'explique aussi</h3><p>Si un mot te perd, demande-moi. Je te l'expliquerai autrement, autant de fois que nécessaire.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="etapes">
+  <div class="wrap">
+    <h2>Ton premier site, en 6 étapes</h2>
+    <p class="time">⏱ Compte 1 h à 1 h 30 la première fois, en prenant ton temps. Il y a un petit guide pas à pas pour chaque étape.</p>
+
+    <div class="step">
+      <div class="num">1</div>
+      <div>
+        <h3>Installer Claude</h3>
+        <p>Trois façons de m'utiliser, toutes avec le même compte :</p>
+        <ul>
+          <li><strong>Sur ordinateur :</strong> va sur <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a>, tu peux aussi télécharger l'application Mac / Windows depuis le site.</li>
+          <li><strong>Sur téléphone :</strong> cherche « <strong>Claude</strong> » (par Anthropic) dans l'App Store ou le Play Store. Pratique pour me parler partout, et même créer ton site depuis ton canapé.</li>
+        </ul>
+        <p>Crée ton compte avec ton adresse mail (ou ton compte Google), tu reçois un code, et c'est parti.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">2</div>
+      <div>
+        <h3>Passer à l'abonnement Pro (~20 $/mois)</h3>
+        <p>La version gratuite te laisse me parler un peu, mais pour construire un site on a besoin de plus de place et des outils de création. L'abonnement de base, <strong>« Pro », coûte environ 20 $ par mois</strong> (le prix exact peut varier un peu). Sans engagement : tu peux arrêter quand tu veux.</p>
+        <ol>
+          <li>Dans Claude, clique sur ton nom (en bas à gauche) puis sur <strong>« Mettre à niveau »</strong> / <em>Upgrade</em>.</li>
+          <li>Choisis <strong>Pro</strong>, entre ta carte bancaire, valide.</li>
+        </ol>
+        <div class="note ok"><strong>Mon conseil de modèle :</strong> dans le menu en haut de la conversation, choisis <strong>Sonnet 5.5</strong>. C'est le meilleur point de départ : rapide, très bon pour créer des sites, et il consomme peu de ton quota.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">3</div>
+      <div>
+        <h3>Créer ton compte GitHub</h3>
+        <p><strong>GitHub</strong>, c'est comme un Google Drive pour les sites et le code. Et c'est gratuit. C'est aussi là que ton site va vivre sur internet.</p>
+        <ol>
+          <li>Va sur <a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a>.</li>
+          <li>Entre ton adresse mail, un mot de passe, et surtout un <strong>nom d'utilisateur</strong> (ex : <code>alois-dupont</code>). Il apparaîtra dans l'adresse de ton site, choisis-le bien !</li>
+          <li>Résous le petit puzzle « je ne suis pas un robot », puis valide le code reçu par mail.</li>
+          <li>Quand GitHub pose des questions (« tu es étudiant ? », etc.), tu peux cliquer sur <em>Skip</em> / Passer. Choisis l'offre <strong>Free</strong>.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">4</div>
+      <div>
+        <h3>Créer ton premier « repo »</h3>
+        <p>Un <strong>repo</strong> (« dépôt »), c'est juste un <strong>dossier</strong> sur GitHub qui contient les fichiers de ton site.</p>
+        <ol>
+          <li>Sur GitHub, clique sur le <strong>+</strong> en haut à droite puis <strong>New repository</strong>.</li>
+          <li><strong>Repository name :</strong> un nom court, sans espaces ni accents. Ex : <code>mon-site</code>.</li>
+          <li>Coche <strong>Public</strong> (obligatoire pour le gratuit).</li>
+          <li>Coche <strong>« Add a README file »</strong>. Ça crée directement un premier fichier, et le dossier n'est pas vide.</li>
+          <li>Clique sur <strong>Create repository</strong>. C'est fait !</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">5</div>
+      <div>
+        <h3>Brancher GitHub à Claude</h3>
+        <p>C'est l'étape qui fait la magie : une fois reliés, je peux <strong>écrire directement dans ton repo</strong>, sans que tu copies-colles quoi que ce soit.</p>
+        <ol>
+          <li>Sur <a href="https://claude.ai/code" target="_blank" rel="noopener">claude.ai/code</a> (ou dans l'application, onglet <strong>Code</strong>), Claude te propose de <strong>connecter GitHub</strong>.</li>
+          <li>Clique, connecte-toi à GitHub, et autorise l'application <strong>« Claude »</strong>.</li>
+          <li>GitHub te demande à quels repos donner accès : choisis <strong>« Only select repositories »</strong> et sélectionne uniquement ton repo <code>mon-site</code>. Tu gardes le contrôle.</li>
+          <li>De retour dans Claude, choisis ce repo, et tu peux me demander ton site.</li>
+        </ol>
+        <div class="note">Les menus bougent de temps en temps. Si tu ne trouves pas un bouton, demande-moi : « je suis perdu, où est le bouton pour connecter GitHub ? ». Fais une capture d'écran et envoie-la-moi, je te guide.</div>
+        <div class="note ok"><strong>Plan B sans connexion :</strong> demande-moi de te faire un fichier <code>index.html</code> dans une conversation normale, télécharge-le, puis dans ton repo GitHub clique sur <strong>Add file → Upload files</strong> et glisse-le dedans. Ça marche aussi !</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">6</div>
+      <div>
+        <h3>Mettre ton site en ligne (GitHub Pages)</h3>
+        <p><strong>GitHub Pages</strong> est un service gratuit qui transforme ton repo en vrai site internet, avec une adresse que tu peux envoyer à tout le monde.</p>
+        <ol>
+          <li>Dans ton repo, clique sur l'onglet <strong>Settings</strong> (⚙️, en haut).</li>
+          <li>Dans le menu à gauche, clique sur <strong>Pages</strong>.</li>
+          <li>Sous <strong>Build and deployment → Source</strong>, choisis <strong>« Deploy from a branch »</strong>.</li>
+          <li>Sous <strong>Branch</strong>, choisis <code>main</code> et le dossier <code>/ (root)</code>, puis clique sur <strong>Save</strong>.</li>
+          <li>Attends 1 à 2 minutes, recharge la page : l'adresse apparaît en haut :<br><code>https://TON-PSEUDO.github.io/mon-site/</code></li>
+        </ol>
+        <div class="note">Il faut un fichier nommé <code>index.html</code> à la racine du repo : c'est la page d'accueil. Je le crée pour toi, tu n'as qu'à me le demander.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ce-soir">
+  <div class="wrap">
+    <h2>Ce soir : ton premier site</h2>
+    <p>Une fois les 6 étapes faites, ouvre une conversation avec moi (en <strong>Sonnet 5.5</strong>), repo sélectionné, et colle ça, en le personnalisant :</p>
+    <div class="prompt" id="p1"><button class="copy" data-target="p1">Copier</button>Salut Claude ! Je suis débutant complet, je n'y connais rien en code.
+Crée-moi un site d'une seule page (fichier index.html) pour me présenter.
+Infos sur moi : je m'appelle Aloïs, j'aime [mes passions], je fais [mon activité].
+Je veux : un titre accrocheur, une courte présentation, une section « mes passions », et une façon de me contacter.
+Style : moderne, sobre, lisible sur téléphone.
+Écris le fichier dans mon repo, puis explique-moi simplement ce que tu as fait.</div>
+    <p>Quand c'est fait, attends 1 à 2 minutes, ouvre l'adresse de ton site : <strong>tu es en ligne</strong>. Ensuite, joue : « change les couleurs », « ajoute une photo », « mets un fond étoilé », « ajoute un petit jeu ». Un message, un changement.</p>
+    <div class="note ok"><strong>Astuce de pro :</strong> tu es bloqué ? Écris « explique-moi comme si j'avais 10 ans ». Ça marche à tous les coups.</div>
+  </div>
+</section>
+
+<section id="lab">
+  <div class="wrap">
+    <h2>Ce que je sais faire (essaie, c'est vivant)</h2>
+    <p>Hugo a un style un peu <em>savant fou</em> : maths, physique, art génératif, trucs qui bougent. Voici trois mini-expériences que j'ai écrites pour ce site. Elles sont toutes dans cette page, sans rien d'autre. Touche, glisse, déplace les curseurs.</p>
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-demo="0">🌌 L'essaim</button>
+      <button role="tab" aria-selected="false" data-demo="1">🌳 L'arbre fractal</button>
+      <button role="tab" aria-selected="false" data-demo="2">🌀 Le spirographe</button>
+    </div>
+    <div class="lab">
+      <canvas id="cv" aria-label="Démonstration interactive"></canvas>
+      <div class="ctrl" id="ctrl"></div>
+      <div class="caption" id="cap"></div>
+    </div>
+    <p style="margin-top:18px">Et ce n'est qu'un échantillon. Tu pourrais me demander : un <strong>jeu</strong>, un <strong>portfolio photo</strong>, un <strong>site pour ton club ou ton commerce</strong>, un <strong>quiz</strong>, une <strong>calculatrice</strong> sur mesure, un <strong>CV en ligne</strong>, une <strong>invitation d'anniversaire</strong>…</p>
+  </div>
+</section>
+
+<section id="hugo">
+  <div class="wrap">
+    <h2>Les expériences de Hugo</h2>
+    <p>Hugo fait déjà plein de projets avec moi. Son site, c'est <a href="https://hugohismans.github.io" target="_blank" rel="noopener">hugohismans.github.io</a>. Quelques projets à aller voir :</p>
+    <div class="grid proj">
+      <a href="https://github.com/hugohismans/periastre" target="_blank" rel="noopener"><div class="card"><h3>🕳️ Periastre</h3><p>Un trou noir (Sagittarius A*) calculé en simulant la courbure de la lumière. Trois niveaux de lecture : du curieux à l'astrophysicien.</p></div></a>
+      <a href="https://github.com/hugohismans/RubiksSolver" target="_blank" rel="noopener"><div class="card"><h3>🧊 Rubik's Solver</h3><p>Un programme qui résout le Rubik's Cube.</p></div></a>
+      <a href="https://github.com/hugohismans/Tetris" target="_blank" rel="noopener"><div class="card"><h3>🕹️ Tetris</h3><p>Le grand classique, refait de zéro.</p></div></a>
+      <a href="https://github.com/hugohismans/infArt" target="_blank" rel="noopener"><div class="card"><h3>🎨 infArt</h3><p>De l'art qui ne s'arrête jamais.</p></div></a>
+    </div>
+    <p style="margin-top:18px">Il y en a beaucoup d'autres : tout est sur <a href="https://github.com/hugohismans?tab=repositories" target="_blank" rel="noopener">son GitHub</a>. Tu vois : avec un peu de curiosité et quelques phrases, on va loin.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">Fait avec Claude, pour Aloïs, à la demande de Hugo.<br>À toi de jouer 🚀</div>
+</footer>
+
+<script>
+// ---- Copier le prompt
+document.querySelectorAll('.copy').forEach(function(b){
+  b.addEventListener('click',function(){
+    var box=document.getElementById(b.dataset.target);
+    var txt=box.textContent.replace(b.textContent,'').trim();
+    var done=function(){b.textContent='Copié ✔';setTimeout(function(){b.textContent='Copier'},1500)};
+    if(navigator.clipboard){navigator.clipboard.writeText(txt).then(done,function(){})}
+  });
+});
+
+// ---- Labo
+(function(){
+  var cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+  var ctrl=document.getElementById('ctrl'),cap=document.getElementById('cap');
+  var W=0,H=0,dpr=1,cur=0,raf=0,t0=performance.now();
+  var ptr={x:null,y:null,down:false};
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize(){
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    var r=cv.getBoundingClientRect();
+    W=r.width;H=r.height;
+    cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
+  }
+  function pos(e){var r=cv.getBoundingClientRect();ptr.x=e.clientX-r.left;ptr.y=e.clientY-r.top}
+  cv.addEventListener('pointermove',pos);
+  cv.addEventListener('pointerdown',function(e){ptr.down=true;pos(e)});
+  window.addEventListener('pointerup',function(){ptr.down=false});
+  cv.addEventListener('pointerleave',function(){ptr.x=null;ptr.down=false});
+
+  function slider(id,label,min,max,step,val){
+    return '<label>'+label+' <input type="range" id="'+id+'" min="'+min+'" max="'+max+'" step="'+step+'" value="'+val+'"></label>';
+  }
+  function v(id){return parseFloat(document.getElementById(id).value)}
+
+  // 1. Essaim
+  var N=700,ps=[];
+  function initSwarm(){
+    ps=[];
+    for(var i=0;i<N;i++){ps.push({x:Math.random()*W,y:Math.random()*H,vx:0,vy:0})}
+  }
+  function swarm(){
+    ctx.fillStyle='rgba(0,0,0,0.14)';ctx.fillRect(0,0,W,H);
+    var g=v('s_g'),tx=ptr.x==null?W/2+Math.cos(performance.now()/1500)*W*0.3:ptr.x,
+        ty=ptr.y==null?H/2+Math.sin(performance.now()/1100)*H*0.3:ptr.y;
+    var sign=ptr.down?-1:1;
+    for(var i=0;i<ps.length;i++){
+      var p=ps[i],dx=tx-p.x,dy=ty-p.y,d=Math.sqrt(dx*dx+dy*dy)+20;
+      var f=g*sign*60/d;
+      p.vx=(p.vx+dx/d*f*0.05)*0.985;p.vy=(p.vy+dy/d*f*0.05)*0.985;
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W||p.y<0||p.y>H){p.x=Math.random()*W;p.y=Math.random()*H;p.vx=p.vy=0}
+      var s=Math.min(Math.hypot(p.vx,p.vy)/4,1);
+      ctx.fillStyle='hsl('+(20+s*160)+',90%,'+(50+s*20)+'%)';
+      ctx.fillRect(p.x,p.y,1.8,1.8);
+    }
+  }
+
+  // 2. Arbre
+  function branch(x,y,len,a,depth,ang,sway){
+    if(depth===0||len<2)return;
+    var x2=x+Math.cos(a)*len,y2=y+Math.sin(a)*len;
+    ctx.strokeStyle=depth<3?'hsl(140,70%,60%)':'hsl('+(20+depth*4)+',50%,'+(30+depth*3)+'%)';
+    ctx.lineWidth=depth*0.8;
+    ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x2,y2);ctx.stroke();
+    branch(x2,y2,len*0.77,a-ang+sway,depth-1,ang,sway);
+    branch(x2,y2,len*0.77,a+ang+sway,depth-1,ang,sway);
+  }
+  function tree(){
+    ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
+    var ang=v('t_a')*Math.PI/180,d=v('t_d'),
+        sway=reduce?0:Math.sin(performance.now()/1200)*0.05;
+    ctx.lineCap='round';
+    branch(W/2,H-6,H*0.2,-Math.PI/2,d,ang,sway);
+  }
+
+  // 3. Spirographe
+  var trail=0;
+  function spiro(){
+    var a=v('p_a'),b=v('p_b'),ph=reduce?0:performance.now()/4000;
+    ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
+    var cx=W/2,cy=H/2,R=Math.min(W,H)*0.42;
+    ctx.lineWidth=1.6;
+    ctx.beginPath();
+    for(var i=0;i<=1500;i++){
+      var t=i/1500*Math.PI*2;
+      var x=cx+R*Math.sin(a*t+ph),y=cy+R*Math.sin(b*t);
+      i?ctx.lineTo(x,y):ctx.moveTo(x,y);
+    }
+    var g=ctx.createLinearGradient(0,0,W,H);
+    g.addColorStop(0,'#e9855a');g.addColorStop(1,'#7fe0c2');
+    ctx.strokeStyle=g;ctx.stroke();
+  }
+
+  var demos=[
+    {ctrl:slider('s_g','Gravité',0.2,3,0.1,1.2),run:swarm,init:initSwarm,
+     cap:'<b>Ce que j\'ai écrit :</b> 700 particules attirées par ton doigt ou ta souris. <b>Appuie</b> pour les repousser. C\'est de la physique (attraction + frottement), calculée 60 fois par seconde.'},
+    {ctrl:slider('t_a','Angle',5,60,1,25)+slider('t_d','Niveaux',3,11,1,9),run:tree,init:function(){},
+     cap:'<b>Ce que j\'ai écrit :</b> un arbre qui se dessine tout seul : chaque branche en fait pousser deux plus petites. Ça s\'appelle une <b>fractale</b>. Joue avec l\'angle.'},
+    {ctrl:slider('p_a','Fréquence A',1,9,1,3)+slider('p_b','Fréquence B',1,9,1,4),run:spiro,init:function(){},
+     cap:'<b>Ce que j\'ai écrit :</b> une courbe de <b>Lissajous</b>, la figure que dessinent deux oscillations qui se croisent. Change les fréquences : chaque combinaison est un dessin unique.'}
+  ];
+
+  function select(i){
+    cur=i;
+    ctrl.innerHTML=demos[i].ctrl;cap.innerHTML=demos[i].cap;
+    document.querySelectorAll('.tabs button').forEach(function(b){
+      b.setAttribute('aria-selected',String(+b.dataset.demo===i));
+    });
+    ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
+    demos[i].init();
+  }
+  function loop(){
+    demos[cur].run();
+    raf=requestAnimationFrame(loop);
+  }
+
+  document.querySelectorAll('.tabs button').forEach(function(b){
+    b.addEventListener('click',function(){select(+b.dataset.demo)});
+  });
+  window.addEventListener('resize',function(){resize();demos[cur].init()});
+
+  // ne tourne que quand visible
+  var vis=true;
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      vis=es[0].isIntersecting;
+      if(vis&&!raf)raf=requestAnimationFrame(loop);
+      if(!vis){cancelAnimationFrame(raf);raf=0}
+    }).observe(cv);
+  }
+  resize();select(0);
+  raf=requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
